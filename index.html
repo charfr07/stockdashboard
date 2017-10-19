@@ -1,0 +1,411 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/slate/bootstrap.min.css" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.25/jquery.fancybox.min.css" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.25/jquery.fancybox.min.js"></script>
+
+
+		<style>
+			body {
+				width: 100%;
+				padding: 10px 20px;
+			}
+			
+			.chart {
+				margin-bottom: 15px;
+			}
+			
+			.tiny .tickerOverlay {
+				font-size: 24pt;
+			}
+			
+			.tickerOverlay {
+				position:absolute;
+				width:100%;
+				top:0; 
+				left:0;
+			
+				display:block; 
+				z-index:1000;
+				visibility:visible;
+				font-family: Arial; 
+				font-size: 40pt; 
+				font-weight: bold;
+				color:grey;opacity:0.4;
+				filter:alpha(opacity=40);
+				text-align: center;
+				text-transform: uppercase;
+			}
+			
+			.tickerInfoOverlay {
+				position:absolute;
+				width:100%;
+				top:0; 
+				left:0;
+			
+				margin: 18px 30px;
+				display:block; 
+				z-index:1000;
+				visibility:visible;
+				font-family: Arial; 
+				font-size: 10pt; 
+				font-weight: bold;
+				color:black;
+				opacity:0.8;
+				filter:alpha(opacity=80);
+				text-align: left;
+			}
+
+			.progress {
+				height: 6px;
+				margin-bottom: 0;
+			}
+			
+			.progress.active .progress-bar {
+				-webkit-transition: none !important;
+				transition: none !important;
+			}	
+				
+		</style>
+		
+		<script>
+			var scheduler;			// Object containing the scheduler so we can reset it when we manually refresh
+			var timerDelay = 20;	// Delay value (total)
+			var timerValue = 20;	// Current value of the clock
+			
+			/* Preset ticker lists */
+			var tlCanMj = "CA:WEED,CA:ACB,CA:APH,CA:OGI,CA:LEAF,CA:CMED,CA:THCX,CA:CBW,CA:HVST,CA:MJN,CA:EMC,CA:EMH";
+			var tlIndices = "US:SPY,CA:HVU,CA:HUV,CA:HVI";
+			var tlMining = "CA:NMX,CA:NLC,CA:LAC,CA:NVO";
+			var tlTech = "CA:SHOP,US:GOOG,US:TSLA,US:AAPL,US:AMZN,US:FB";
+			var tlMiscPenny = "CA:VPT,CA:FGD,CA:JET,CA:MXL,CA:PYR,CA:ION";
+			var tlWarrants = "CA:NMX.WT,CA:JET.WT,CA:CBW.WT,CA:OGI.WT"
+		
+			// On page load
+			$( document ).ready(function() {
+				loadParameters();
+									
+				$("#btnRefresh").click(function() {
+					refreshContent();
+				});
+				
+				$("#tickers").on( "keyup", function() {
+					saveParameters();
+				});
+				
+				$("#tickers").on( "change", function() {
+					refreshContent();
+				});
+				
+				$("#chartType").on( "change", function() {
+					saveParameters();
+					refreshContent();
+				});
+				
+				$("#taIndicator").on( "change", function() {
+					saveParameters();
+					refreshContent();
+				});
+				
+				$("#chartCss").on( "change", function() {
+					saveParameters();
+					refreshContent();
+				});
+				
+				$("#progressBarVisible").on( "change", function() {
+					saveParameters();
+					refreshContent();
+				});
+				
+				$("#tickersList").on( "change", function() {
+					saveParameters();
+					refreshContent();
+					
+					if ($(this).val() === "tlCustom") {
+						$("#customerTickers").show();
+					} 
+					else {	
+						$("#customerTickers").hide();
+					}
+				});
+				
+				$("#timerDelay").on( "keyup", function() {
+					saveParameters();
+				});
+				
+				$("#timerDelay").on( "change", function() {
+					refreshContent();
+				});
+				
+				$('.panel').on('hidden.bs.collapse shown.bs.collapse', function (e) {
+					saveParameters();
+				})
+				
+				refreshContent();
+			});
+			
+			// Load parameters
+			function loadParameters() {
+				var defaultTickers =  "US:SPY,CA:HVU,CA:HVI,CA:PLI,CA:NMX,CA:NVO,CA:BBDB,CA:SHOP,CA:WEED,CA:APH,CA:ACB,CA:THCX,CA:IMH,CA:HVST,CA:WMD,CA:VPT,CA:FGD,CA:PYR,CA:ONC,CA:JET,CA:DYA";
+				var defaultChartType = "freq=6&time=1";
+				var defaultTimerDelay = 20;
+				var defaultChartCss = "chart col-xs-12 col-sm-6 col-md-4 col-lg-3";
+				var defaultTaIndicator = "16";
+				var defaultTickersList = "tlCustom";
+
+				if (typeof(Storage) !== "undefined") {
+					$("#tickers").val( localStorage.getItem("tickers") || defaultTickers );
+					$("#chartType").val( localStorage.getItem("chartType") || defaultChartType );
+					$("#timerDelay").val( localStorage.getItem("timerDelay") || defaultTimerDelay );
+					$("#chartCss").val( localStorage.getItem("chartCss") || defaultChartCss );
+					$("#taIndicator").val( localStorage.getItem("taIndicator") || defaultTaIndicator );
+					$("#tickersList").val( localStorage.getItem("tickersList") || defaultTickersList );
+
+					if ( localStorage.getItem("progressBarVisible") == "true" ) {
+						$("#progressBarVisible").prop("checked",true);
+					}
+					
+					if ( localStorage.getItem("parametersShown") == "false" ) {
+						$("#collapseParameters").collapse();
+					}
+				} else {
+					// Load some default parameters
+					$("#tickers").val( defaultTickers );
+					$("#chartType").val( defaultChartType );
+					$("#timerDelay").val( defaultTimerDelay );
+					$("#chartCss").val( defaultChartcss );
+					$("#taIndicator").val( defaultTaIndicator );
+					$("#tickersList").val( defaultTickersList );
+					$("#progressBarVisible").val( defaultProgressBarVisible );
+					$("#progressBarVisible").prop("checked",true);
+				}
+			}
+			
+			// Save parameters
+			function saveParameters() {
+				if (typeof(Storage) !== "undefined") {
+					var tickers = $("#tickers").val();
+					var chartType = $("#chartType").val();
+					var timerDelay = $("#timerDelay").val();
+					var chartCss = $("#chartCss").val();
+					var taIndicator = $("#taIndicator").val();
+					var tickersList = $("#tickersList").val();
+					var progressBarVisible = $("#progressBarVisible").is(":checked");
+					
+					localStorage.setItem("tickers", tickers);
+					localStorage.setItem("chartType", chartType);
+					localStorage.setItem("chartCss", chartCss);
+					localStorage.setItem("timerDelay", timerDelay);
+					localStorage.setItem("taIndicator", taIndicator);
+					localStorage.setItem("tickersList", tickersList);
+					localStorage.setItem("progressBarVisible", progressBarVisible);
+					localStorage.setItem("parametersShown", $("#collapseParameters").attr("aria-expanded") );
+				} else {
+					// No where to save info :(
+				}
+			}
+			
+			// Starts the counter 
+			function startCounter() {
+				timerValue = $("#timerDelay").val();
+				
+				$('.progress-bar').stop();
+				$(".progress-bar").addClass("notransition");
+				$('.progress-bar').attr('style', "width: 0%");
+
+				$(".progress-bar").animate({
+					width: "100%"
+				}, timerValue*1000);
+				
+				scheduler = setInterval( function() {
+					timerValue--;
+					$('#delayValue').html(timerValue);
+					if (timerValue === 0) {
+						refreshContent();
+					}    
+				}, 1000 );
+			}
+
+			// Refresh all the charts
+			function refreshContent() {
+				var randomNumber = Math.floor((Math.random() * 100000) + 1); // Need a random number for chart IDs
+				
+				clearInterval(scheduler);	// Let's kill the clock so it doesn't run multiple ones at the same time
+				
+				// Get the parameters for the charts
+				$("#chart_container").html("");
+				var tickers = "US:SPY";
+				var chartType = $("#chartType").val();
+				var chartCss = $("#chartCss").val();
+				var taIndicator = $("#taIndicator").val();
+				var tickersList = $("#tickersList").val();
+				var progressBarVisible = localStorage.getItem("progressBarVisible");
+				
+				switch (tickersList) {
+					case "tlCustom":
+						tickers = $("#tickers").val().split(',');
+						break;
+					case "tlCanMj":
+						tickers = tlCanMj.split(',');
+						break;
+					case "tlIndices":
+						tickers = tlIndices.split(',');
+						break;
+					case "tlMining":
+						tickers = tlMining.split(',');
+						break;
+					case "tlTech":
+						tickers = tlTech.split(',');
+						break;
+					case "tlMiscPenny":
+						tickers = tlMiscPenny.split(',');
+						break;
+					case "tlWarrants":
+						tickers = tlWarrants.split(',');
+						break;
+					default:
+						tickers = $("#tickers").val().split(',');
+						break;
+				}
+				
+				if (progressBarVisible === "true" && $(".progress").is(":visible") == false ) {
+					$(".progress").show();
+				} 
+				
+				if (progressBarVisible !== "true" && $(".progress").is(":visible") == true ) {
+					$(".progress").hide();
+				}
+
+				/*
+				var bidPrice = "$1.99";
+				var askPrice = "$2.01";
+				var lastPrice = "$2.00";
+				*/
+				
+				$.each(tickers, function( index, value ) {
+					// Don't try to fetch charts for invalid tickers
+					if ( !(value.trim()) || (value.indexOf("CA:") == -1 && value.indexOf("US:") == -1) ) {
+						return true; // continue
+					} else {
+						var imgLink = "http://realtimebigchart.gtm.idmanagedsolutions.com/custom/fidelity-com/big.chart?nosettings=1&symb="
+							+value+"&uf="
+							+taIndicator+"&type=4&size=1&style=1145&"
+							+chartType+"&rand="
+							+randomNumber+"&compidx=aaaaa:0&comp=&ma=0&maval=9&lf=268435456&lf2=0&lf3=0&height=300&width=500&mocktick=1";
+					
+						$("#chart_container").append(
+							"<div class=\""+chartCss+"\"><a data-fancybox href=\""+imgLink+"\"><img width=\"100%\" src=\""+imgLink+"\" /></a>"
+							+"<div class=\"tickerOverlay\" >"+value+"</div>"
+							/*+"<div style=\"top: 0px\" class=\"tickerInfoOverlay\" id=\"IndxSymbol1\" >Bid: "+bidPrice+"</div>"
+							+"<div style=\"top: 18px\"class=\"tickerInfoOverlay\" id=\"IndxSymbol1\" >Ask: "+askPrice+"</div>"
+							+"<div style=\"top: 36px\" class=\"tickerInfoOverlay\" id=\"IndxSymbol1\" >Last: "+lastPrice+"</div>"*/
+							+"</div>"
+						);
+					}
+				});
+				
+				startCounter();
+			}
+		</script>
+	</head>
+	<body>
+		<div class="progress progress-striped active">
+			<div class="progress-bar progress-bar-success" style="width:0%"></div>
+		</div>
+	
+		<div class="row" id="params">
+			<div class="col-sm-12">
+				
+				<div class="panel-group" id="accordion">
+				  <div class="panel panel-default">
+					<div class="panel-heading">
+					  <h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapseParameters">
+						Parameters (click to hide/show)</a>
+					  </h4>
+					</div>
+					<div id="collapseParameters" class="panel-collapse collapse in">
+					  <div class="panel-body">
+						<div class="row">
+							<div class="col-sm-12 col-md-6 col-lg-3">
+								<h3>Tickers list</h3>
+								<select id="tickersList" class="form-control">
+									<option value="tlCustom">Custom (Textbox below)</option>
+									<option value="tlCanMj">Canadian MJ</option>
+									<option value="tlIndices">Indices</option>
+									<option value="tlMining">Mining</option>
+									<option value="tlTech">Tech</option>
+									<option value="tlMiscPenny">Misc penny stocks</option>
+									<option value="tlWarrants">Warrants</option>
+								</select>
+								<div id="customerTickers">
+									<h3>Custom tickers list</h3>
+									<textarea id="tickers" style="width:100%; height: 80px"></textarea>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-3">
+								<h3>Chart type</h3>
+								<select id="chartType" class="form-control">
+									<option value="freq=6&time=1">1 day / 5 minutes</option>
+									<option value="freq=5mi&time=3dy">3 day / 5 minutes</option>
+									<option value="freq=1&time=6">3 months / daily</option>
+									<option value="freq=1&time=7">6 months / daily</option>
+									<option value="freq=1&time=8">1 year / daily</option>
+									<option value="freq=2&time=12">5 year / weekly</option>
+									<option value="freq=2&time=13">10 year / weekly</option>
+								</select>
+								
+								<h3>Technical analysis indicator</h3>
+								<select id="taIndicator" class="form-control">
+									<option value="16">Parabolic SAR</option>
+									<option value="8">Bollinger Bands</option>
+									<option value="128">Price channel</option>
+									<option value="32">Volume by price</option>
+								</select>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-3">
+								<h3>Layout</h3>
+								<select id="chartCss" class="form-control">
+									<option value="chart col-xs-12 col-sm-6 col-md-4 col-lg-3">Automatic (normal/default)</option>
+									<option value="chart tiny col-xs-6 col-sm-4 col-md-3 col-lg-2">Automatic (tiny)</option>
+									<option value="chart col-xs-12 col-sm-12 col-md-6 col-lg-4">Automatic (large)</option>
+									<option value="chart col-xs-12 col-sm-12 col-md-6 col-lg-6">Automatic (larger)</option>
+									<option value="chart col-xs-12">1 column</option>
+									<option value="chart col-xs-6">2 columns</option>
+									<option value="chart col-xs-4">3 columns</option>
+									<option value="chart col-xs-3">4 columns</option>
+								</select>
+								
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-3">
+								<h3>Refresh period</h3>
+								<input id="timerDelay" type="number" />
+								<button class="btn btn-primary" id="btnRefresh">Refresh (<span id="delayValue"></span>)</button>
+								
+								<div class="form-check">
+									<label class="form-check-label">
+										<input id="progressBarVisible" class="form-check-input" type="checkbox">
+										Show refresh progress bar
+									</label>
+								</div>
+							</div>
+						</div>
+					  
+					  	
+						
+						
+					  </div>
+					</div>
+				  </div>
+				</div>
+				
+			</div>
+		</div>
+		
+		<div class="row" id="chart_container">
+		</div>
+
+	</body>
+</html>
