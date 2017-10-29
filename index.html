@@ -82,7 +82,7 @@
 		</style>
 		
 		<script>
-			var scheduler;			// Object containing the scheduler so we can reset it when we manually refresh
+			var scheduler;		// Object containing the scheduler so we can reset it when we manually refresh
 			var timerDelay = 20;	// Delay value (total)
 			var timerValue = 20;	// Current value of the clock
 			
@@ -91,8 +91,8 @@
 			var tlIndices = "US:SPY,CA:HVU,CA:HUV,CA:HVI";
 			var tlMining = "CA:NMX,CA:NLC,CA.ORL,CA:LAC,CA:ML,CA:NVO,CA:FCC";
 			var tlTech = "US:AMZN,US:AAPL,US:GOOG,US:TSLA,US:FB,US:INTC,CA:SHOP,US:NVDA,US:AMD,US:BIDU";
-			var tlMiscPenny = "CA:VPT,CA:FGD,CA:JET,CA:MXL,CA:PYR,CA:ION,CA:MXL,CA:BIOA";
-			var tlWarrants = "CA:NMX.WT,CA:JET.WT,CA:CBW.WT,CA:OGI.WT,CA:EMC.WT"
+			var tlMiscPenny = "CA:VPT,CA:FGD,CA:JET,CA:MXL,CA:PYR,CA:ION,CA:BIOA";
+			var tlWarrants = "CA:NMX.WT,CA:JET.WT,CA:CBW.WT,CA:OGI.WT,CA:EMC.WT,CA:ACB.WT,CA:JET.WTA"
 		
 			// On page load
 			$( document ).ready(function() {
@@ -153,13 +153,6 @@
 				$('.panel').on('hidden.bs.collapse shown.bs.collapse', function (e) {
 					saveParameters();
 				})
-				
-				if ($("#tickerLists").val() === "tlCustom") {
-					$("#customerTickers").show();
-				} 
-				else {	
-					$("#customerTickers").hide();
-				}
 				
 				refreshContent();
 			});
@@ -323,6 +316,13 @@
 						);
 					}
 				});
+				
+				if ($("#tickerLists").val() === "tlCustom") {
+					$("#customerTickers").show();
+				} 
+				else {	
+					$("#customerTickers").hide();
+				}
 				
 				startCounter();
 			}
