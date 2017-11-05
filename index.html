@@ -43,7 +43,7 @@
 				display:block; 
 				z-index:1000;
 				visibility:visible;
-				font-family: Arial; 
+				font-family: "Arial"; 
 				font-size: 40pt; 
 				font-weight: bold;
 				color:grey;opacity:0.4;
@@ -86,7 +86,7 @@
 		<script>
 			moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0');
 
-			var scheduler;			// Object containing the scheduler so we can reset it when we manually refresh
+			var scheduler;		// Object containing the scheduler so we can reset it when we manually refresh
 			var timerDelay = 20;	// Delay value (total)
 			var timerValue = 20;	// Current value of the clock
 			
@@ -99,6 +99,7 @@
 			var tlWarrants = "CA:NMX.WT,CA:JET.WT,CA:JET.WTA,CA:CBW.WT,CA:OGI.WT,CA:EMC.WT,CA:ACB.WT"
 			var tlEtfs = "CA:HVU,CA:HUV,CA:HVI,CA:HOD,CA:HOU,CA:HGU,CA:HGD,CA:HND,CA:HNU";
 			var tlCouchPotatoEtfs = "CA:XIC,CA:VCN,CA:XUU,CA:XEF,CA:VEE,CA:VSB";
+			var tlCrypto = "CA:BLOC,CA:HIVE,CA:ID,CA:MOGO";
 		
 			// On page load
 			$( document ).ready(function() {
@@ -213,8 +214,9 @@
 					$("#tickers").val( defaultTickers );
 					$("#chartType").val( defaultChartType );
 					$("#timerDelay").val( defaultTimerDelay );
-					$("#chartCss").val( defaultChartcss );
+					$("#chartCss").val( defaultChartCss );
 					$("#taIndicator").val( defaultTaIndicator );
+					$("#taIndicator2").val( defaultTaIndicator2 );
 					$("#tickersList").val( defaultTickersList );
 					$("#progressBarVisible").val( defaultProgressBarVisible );
 					$("#progressBarVisible").prop("checked",true);
@@ -256,7 +258,7 @@
 				if ( 	hourInNewYork >= 16 && minutesInNewYork > 5 
 					|| 	hourInNewYork > 16 
 					|| 	hourInNewYork < 9 
-					|| 	hourInNewyork <= 9 && minutesInNewYork < 25
+					|| 	hourInNewYork <= 9 && minutesInNewYork < 25
 				) {
 					timerValue = 600;
 				} else {
@@ -323,6 +325,9 @@
 						break;
 					case "tlCouchPotatoEtfs":
 						tickers = tlCouchPotatoEtfs.split(',');
+						break;
+					case "tlCrypto":
+						tickers = tlCrypto.split(',');
 						break;
 					default:
 						tickers = $("#tickers").val().split(',');
@@ -412,6 +417,7 @@
 								<select id="tickersList" class="form-control">
 									<option value="tlCustom">Custom (Textbox below)</option>
 									<option value="tlCanMj">Canadian MJ</option>
+									<option value="tlCrypto">Canadian Crypto</option>
 									<option value="tlIndices">Indices</option>
 									<option value="tlEtfs">Specialized ETFs</option>
 									<option value="tlCouchPotatoEtfs">Couch potato ETFs</option>
