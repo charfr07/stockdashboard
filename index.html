@@ -254,11 +254,11 @@
 				var hourInNewYork = moment().tz('America/New_York').format('H');
 				var minutesInNewYork = moment().tz('America/New_York').format('m');
 			
-				// If we are outside market hours (assuming 9:25 to 4:05), lets make the timer much longer (in case user goes afk with dashboard still active)
-				if ( 	hourInNewYork >= 16 && minutesInNewYork > 5 
-					|| 	hourInNewYork > 16 
-					|| 	hourInNewYork < 9 
-					|| 	hourInNewYork <= 9 && minutesInNewYork < 20
+				// If we are outside market hours (assuming 8:05 to 5:05), lets make the timer much longer (in case user goes afk with dashboard still active)
+				if ( 	hourInNewYork >= 17 && minutesInNewYork > 5 
+					|| 	hourInNewYork > 17 
+					|| 	hourInNewYork < 8 
+					|| 	hourInNewYork <= 8 && minutesInNewYork < 20
 				) {
 					timerValue = 600;
 				} else {
