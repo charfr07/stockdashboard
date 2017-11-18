@@ -106,6 +106,7 @@
 			var tlCouchPotatoEtfs = "US:SPY,CA:XIC,CA:VCN,CA:XUU,CA:XEF,CA:VEE,CA:VSB,CA:ZEUS,CA:MIND";
 			var tlCrypto = "CA:BLOC,CA:FTEC,CA:HIVE,CA:ID,CA:MOGO,CA:LTV,CA:ICP,CA:DM,CA:QNC,CA:BTL,CA:XAU";
 			var tlStinkers = "CA:VPT,US:NVCN,CA:NVCN,CA:ELD,CA:EFX,CA:TXG,CA:JE,CA:SNR,CA:ALO";
+			var tlActiveEtfs = "CA:DXP,CA:DXU,CA:DXG,CA:DXC,CA:DXF,CA:DXZ,CA:VVO,CA:VVL,CA:VMO,CA:VLQ";
 		
 			// On page load
 			$( document ).ready(function() {
@@ -332,7 +333,10 @@
 						break;
 					case "tlStinkers":
 						tickers = tlStinkers.split(',');
-						break;	
+						break;
+					case "tlActiveEtfs":
+						tickers = tlActiveEtfs.split(',');
+						break;
 					default:
 						tickers = $("#tickers").val().split(',');
 						break;
@@ -425,6 +429,7 @@
 									<option value="tlIndices">Indices</option>
 									<option value="tlEtfs">Specialized ETFs</option>
 									<option value="tlCouchPotatoEtfs">Couch potato ETFs</option>
+									<option value="tlActiveEtfs">Actively managed ETFs</option>
 									<option value="tlMining">Mining</option>
 									<option value="tlTech">Tech</option>
 									<option value="tlMiscPenny">Misc penny stocks</option>
