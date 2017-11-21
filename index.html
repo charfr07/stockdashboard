@@ -1,6 +1,9 @@
 <html>
 	<head>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/slate/bootstrap.min.css" crossorigin="anonymous">
+		<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/slate/bootstrap.min.css" Title="Dark theme (Slate)" crossorigin="anonymous" rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/sandstone/bootstrap.min.css" Title="White theme (Sandstone)" crossorigin="anonymous" rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" Title="White theme (Flatly)" crossorigin="anonymous" rel="stylesheet">	
+		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.25/jquery.fancybox.min.css" />
@@ -144,6 +147,11 @@
 					refreshContent();
 				});
 				
+				$("#theme").on( "change", function() {
+					saveParameters();
+					refreshContent();
+				});
+				
 				$("#progressBarVisible").on( "change", function() {
 					saveParameters();
 					refreshContent();
@@ -199,16 +207,18 @@
 				var defaultTaIndicator = "16";
 				var defaultTaIndicator2 = "268435456";
 				var defaultTickersList = "tlCustom";
+				var defaultTheme = "Dark theme (Slate)";
 
 				if (typeof(Storage) !== "undefined") {
 					$("#tickers").val( localStorage.getItem("tickers") || defaultTickers );
 					$("#chartType").val( localStorage.getItem("chartType") || defaultChartType );
 					$("#timerDelay").val( localStorage.getItem("timerDelay") || defaultTimerDelay );
 					$("#chartCss").val( localStorage.getItem("chartCss") || defaultChartCss );
+					$("#theme").val( localStorage.getItem("theme") || defaultTheme );
 					$("#taIndicator").val( localStorage.getItem("taIndicator") || defaultTaIndicator );
 					$("#taIndicator2").val( localStorage.getItem("taIndicator2") || defaultTaIndicator2 );
 					$("#tickersList").val( localStorage.getItem("tickersList") || defaultTickersList );
-
+					
 					if ( localStorage.getItem("progressBarVisible") == "true" ) {
 						$("#progressBarVisible").prop("checked",true);
 					}
@@ -222,12 +232,13 @@
 					$("#chartType").val( defaultChartType );
 					$("#timerDelay").val( defaultTimerDelay );
 					$("#chartCss").val( defaultChartCss );
+					$("#theme").val( defaultTheme );
 					$("#taIndicator").val( defaultTaIndicator );
 					$("#taIndicator2").val( defaultTaIndicator2 );
 					$("#tickersList").val( defaultTickersList );
 					$("#progressBarVisible").val( defaultProgressBarVisible );
 					$("#progressBarVisible").prop("checked",true);
-				}
+				}	
 			}
 			
 			// Save parameters
@@ -240,11 +251,13 @@
 					var taIndicator = $("#taIndicator").val();
 					var taIndicator2 = $("#taIndicator2").val();
 					var tickersList = $("#tickersList").val();
+					var theme = $("#theme").val();
 					var progressBarVisible = $("#progressBarVisible").is(":checked");
 					
 					localStorage.setItem("tickers", tickers);
 					localStorage.setItem("chartType", chartType);
 					localStorage.setItem("chartCss", chartCss);
+					localStorage.setItem("theme", theme);
 					localStorage.setItem("timerDelay", timerDelay);
 					localStorage.setItem("taIndicator", taIndicator);
 					localStorage.setItem("taIndicator2", taIndicator2);
@@ -295,11 +308,17 @@
 				var tickers = "US:SPY";
 				var chartType = $("#chartType").val();
 				var chartCss = $("#chartCss").val();
+				var theme = $("#theme").val();
 				var taIndicator = $("#taIndicator").val();
 				var taIndicator2 = $("#taIndicator2").val();
 				var tickersList = $("#tickersList").val();
 				var progressBarVisible = localStorage.getItem("progressBarVisible");
 				
+				// Refresh the theme
+				$('link[title][rel="stylesheet"]').prop('disabled', true);
+				$('link[title][rel="stylesheet"][title="'+theme+'"]').prop('disabled', false);
+				
+				// Get the tickers list for charts
 				switch (tickersList) {
 					case "tlCustom":
 						tickers = $("#tickers").val().split(',');
@@ -488,6 +507,12 @@
 									<option value="chart col-xs-2">6 columns</option>
 								</select>
 								
+								<h3>Theme</h3>
+								<select id="theme" class="form-control">
+									<option value="Dark theme (Slate)">Dark theme (Slate)</option>
+									<option value="White theme (Sandstone)">White theme (Sandstone)</option>
+									<option value="White theme (Flatly)">White theme (Flatly)</option>
+								</select>
 							</div>
 							<div class="col-sm-12 col-md-6 col-lg-3">
 								<h3>Refresh period</h3>
@@ -503,15 +528,10 @@
 								</div>
 							</div>
 						</div>
-					  
-					  	
-						
-						
 					  </div>
 					</div>
 				  </div>
 				</div>
-				
 			</div>
 		</div>
 		
