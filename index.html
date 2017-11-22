@@ -173,6 +173,11 @@
 					refreshContent();
 				});
 				
+				$("#chartStyle").on( "change", function() {
+					saveParameters();
+					refreshContent();
+				});
+				
 				$("#progressBarVisible").on( "change", function() {
 					saveParameters();
 					refreshContent();
@@ -229,6 +234,7 @@
 				var defaultTaIndicator2 = "268435456";
 				var defaultTickersList = "tlCustom";
 				var defaultTheme = "Dark theme (Slate)";
+				var defaultChartStyle = "1145";
 
 				if (typeof(Storage) !== "undefined") {
 					$("#tickers").val( localStorage.getItem("tickers") || defaultTickers );
@@ -236,6 +242,7 @@
 					$("#timerDelay").val( localStorage.getItem("timerDelay") || defaultTimerDelay );
 					$("#chartCss").val( localStorage.getItem("chartCss") || defaultChartCss );
 					$("#theme").val( localStorage.getItem("theme") || defaultTheme );
+					$("#chartStyle").val( localStorage.getItem("chartStyle") || defaultChartStyle );
 					$("#taIndicator").val( localStorage.getItem("taIndicator") || defaultTaIndicator );
 					$("#taIndicator2").val( localStorage.getItem("taIndicator2") || defaultTaIndicator2 );
 					$("#tickersList").val( localStorage.getItem("tickersList") || defaultTickersList );
@@ -254,6 +261,7 @@
 					$("#timerDelay").val( defaultTimerDelay );
 					$("#chartCss").val( defaultChartCss );
 					$("#theme").val( defaultTheme );
+					$("#chartStyle").val( defaultChartStyle );
 					$("#taIndicator").val( defaultTaIndicator );
 					$("#taIndicator2").val( defaultTaIndicator2 );
 					$("#tickersList").val( defaultTickersList );
@@ -273,12 +281,14 @@
 					var taIndicator2 = $("#taIndicator2").val();
 					var tickersList = $("#tickersList").val();
 					var theme = $("#theme").val();
+					var chartStyle = $("#chartStyle").val();
 					var progressBarVisible = $("#progressBarVisible").is(":checked");
 					
 					localStorage.setItem("tickers", tickers);
 					localStorage.setItem("chartType", chartType);
 					localStorage.setItem("chartCss", chartCss);
 					localStorage.setItem("theme", theme);
+					localStorage.setItem("chartStyle", chartStyle);
 					localStorage.setItem("timerDelay", timerDelay);
 					localStorage.setItem("taIndicator", taIndicator);
 					localStorage.setItem("taIndicator2", taIndicator2);
@@ -330,6 +340,7 @@
 				var chartType = $("#chartType").val();
 				var chartCss = $("#chartCss").val();
 				var theme = $("#theme").val();
+				var chartStyle = $("#chartStyle").val();
 				var taIndicator = $("#taIndicator").val();
 				var taIndicator2 = $("#taIndicator2").val();
 				var tickersList = $("#tickersList").val();
@@ -406,7 +417,8 @@
 							+"&uf="+taIndicator
 							+"&type=4"
 							+"&size=1"
-							+"&style=1145&"+chartType
+							+"&style="+chartStyle
+							+"&"+chartType
 							+"&rand="+randomNumber
 							+"&compidx=aaaaa:0"
 							+"&comp="
@@ -539,6 +551,19 @@
 										<option value="Dark theme (Slate)">Dark theme (Slate)</option>
 										<option value="White theme (Sandstone)">White theme (Sandstone)</option>
 										<option value="White theme (Flatly)">White theme (Flatly)</option>
+									</select>
+								</div>
+								
+								<h3>Chart style</h3>
+								<div class="form-group">
+									<select id="chartStyle" class="form-control input-sm">
+										<option value="36">Dark-gray yellow/red candles</option>
+										<option value="107">Black green/red candles</option>
+										<option value="728">White blue/yellow candles</option>
+										<option value="1145">White blue/red candles (default)</option>
+										<option value="1504">Night blue green/red candles</option>
+										<option value="1590">Black green/red candles</option>
+										<option value="2178">White green/red candles</option>
 									</select>
 								</div>
 							</div>
