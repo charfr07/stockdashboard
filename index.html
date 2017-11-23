@@ -128,6 +128,7 @@
 			
 			/* Preset ticker lists */
 			var tlCanMj = "CA:WEED,CA:ACB,CA:APH,CA:OGI,CA:LEAF,CA:WMD,CA:CMED,CA:THCX,CA:MJN,CA:EMC,CA:EMH,CA:ABCN,CA:NINE,CA:CBW,CA:HVST,CA:IMH";
+			var tlUsMj = "US:XXII,US:TWMJF,US:MRPHF,US:TRTC,US:DIGP,US:GRWG,US:CNNRF,US:ZYNE,US:MSRT,US:SLTK,US:MCIG,US:KSHB,US:GWPH,US:CVSI,US:HEMP,US:VPGDF";
 			var tlIndices = "US:SPY,CA:HVU,CA:HUV,CA:HVI";
 			var tlMining = "CA:NMX,CA:NLC,CA.ORL,CA:LAC,CA:ML,CA:NVO,CA:FCC,CA:LIX,CA:QMC,CA:ELD,CA:TXG";
 			var tlTech = "US:AMZN,US:AAPL,US:GOOG,US:TSLA,US:FB,US:INTC,CA:SHOP,US:NVDA,US:AMD,US:BIDU,US:ROKU";
@@ -365,6 +366,9 @@
 					case "tlCanMj":
 						tickers = tlCanMj.split(',');
 						break;
+					case "tlUsMj":
+						tickers = tlUsMj.split(',');
+						break;
 					case "tlIndices":
 						tickers = tlIndices.split(',');
 						break;
@@ -484,6 +488,7 @@
 								<select id="tickersList" class="form-control input-sm">
 									<option value="tlCustom">Custom (Textbox below)</option>
 									<option value="tlCanMj">Canadian MJ</option>
+									<option value="tlUsMj">American MJ</option>
 									<option value="tlCrypto">Canadian Crypto</option>
 									<option value="tlIndices">Indices</option>
 									<option value="tlEtfs">Specialized ETFs</option>
