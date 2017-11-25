@@ -245,8 +245,6 @@
 				var defaultTickersList = "tlCustom";
 				var defaultTheme = "Dark theme (Slate)";
 				var defaultChartStyle = "1145";
-				var defaultQuicklinksVisible = "true";
-				var defaultProgressBarVisible = "true";
 
 				if (typeof(Storage) !== "undefined") {
 					$("#tickers").val( localStorage.getItem("tickers") || defaultTickers );
@@ -258,13 +256,15 @@
 					$("#taIndicator").val( localStorage.getItem("taIndicator") || defaultTaIndicator );
 					$("#taIndicator2").val( localStorage.getItem("taIndicator2") || defaultTaIndicator2 );
 					$("#tickersList").val( localStorage.getItem("tickersList") || defaultTickersList );
+					$("#progressBarVisible").prop("checked",true);
+					$("#quicklinksVisible").prop("checked",true);
 					
-					if ( localStorage.getItem("progressBarVisible") == "true" ) {
-						$("#progressBarVisible").prop("checked",true);
+					if ( localStorage.getItem("progressBarVisible") == "false" ) {
+						$("#progressBarVisible").prop("checked",false);
 					}
 					
-					if ( localStorage.getItem("quicklinksVisible") == "true" ) {
-						$("#quicklinksVisible").prop("checked",true);
+					if ( localStorage.getItem("quicklinksVisible") == "false" ) {
+						$("#quicklinksVisible").prop("checked",false);
 					}
 					
 					if ( localStorage.getItem("parametersShown") == "false" ) {
@@ -281,9 +281,7 @@
 					$("#taIndicator").val( defaultTaIndicator );
 					$("#taIndicator2").val( defaultTaIndicator2 );
 					$("#tickersList").val( defaultTickersList );
-					$("#progressBarVisible").val( defaultProgressBarVisible );
 					$("#progressBarVisible").prop("checked",true);
-					$("#quicklinksVisible").val( defaultQuicklinksVisible );
 					$("#quicklinksVisible").prop("checked",true);
 				}	
 			}
@@ -364,8 +362,8 @@
 				var taIndicator = $("#taIndicator").val();
 				var taIndicator2 = $("#taIndicator2").val();
 				var tickersList = $("#tickersList").val();
-				var progressBarVisible = localStorage.getItem("progressBarVisible");
-				var quicklinksVisible = localStorage.getItem("quicklinksVisible");
+				var progressBarVisible = $("#progressBarVisible").is(":checked");
+				var quicklinksVisible = $("#quicklinksVisible").is(":checked");
 				
 				// Refresh the theme
 				$('link[title][rel="stylesheet"]').prop('disabled', true);
@@ -417,11 +415,13 @@
 						break;
 				}
 				
-				if (progressBarVisible === "true" && $(".progress").is(":visible") == false ) {
+				debugger
+				
+				if (progressBarVisible === true && $(".progress").is(":visible") == false ) {
 					$(".progress").show();
 				} 
 				
-				if (progressBarVisible !== "true" && $(".progress").is(":visible") == true ) {
+				if (progressBarVisible !== true && $(".progress").is(":visible") == true ) {
 					$(".progress").hide();
 				}
 				
@@ -441,7 +441,8 @@
 						var shortdataLink;
 						var insiderLink;
 						var stockhouseLink;
-						var stockwatchLink
+						var stockwatchLink;
+						var botbullsLink;
 						
 						if (value.indexOf("CA:") !== -1)
 						{
@@ -451,6 +452,7 @@
 							stockhouseLink = "http://www.stockhouse.com/companies/bullboard?symbol=T."+rawTicker;
 							stockwatchLink = "http://www.stockwatch.com/Quote/Detail.aspx?C:"+rawTicker;
 							insiderLink = "https://www.canadianinsider.com/company?menu_tickersearch="+rawTicker;
+							botbullsLink = "https://www.canadabulls.com/SearchList.aspx?lang=en&SearchText="+rawTicker;
 						}
 						
 						if (value.indexOf("US:") !== -1) 
@@ -461,7 +463,7 @@
 							stockhouseLink = "http://www.stockhouse.com/companies/bullboard?symbol="+rawTicker;
 							stockwatchLink = "http://www.stockwatch.com/Quote/Detail.aspx?symbol="+rawTicker+"&region=U";
 							insiderLink = "https://www.insidertracking.com/company?ticker="+rawTicker;
-							
+							botbullsLink = "https://www.americanbulls.com/SearchList.aspx?lang=en&SearchText="+rawTicker;
 						}
 					
 						var imgLink = "http://realtimebigchart.gtm.idmanagedsolutions.com/custom/fidelity-com/big.chart?nosettings=1&"
@@ -495,6 +497,7 @@
 								+"<a data-toggle=\"tooltip\" title=\"Insider info\" target=\"_blank\" class=\"btn btn-sm btn-default\" href=\""+insiderLink+"\"><i class=\"fa fa-user-secret fa-fw\" aria-hidden=\"true\"></i></a>"
 								+"<a data-toggle=\"tooltip\" title=\"Stockhouse\" target=\"_blank\" class=\"btn btn-sm btn-warning\" href=\""+stockhouseLink+"\"><i class=\"fa fa-bullhorn fa-fw\" aria-hidden=\"true\"></i></a>"
 								+"<a data-toggle=\"tooltip\" title=\"Stockwatch news\" target=\"_blank\" class=\"btn btn-sm btn-primary\" href=\""+stockwatchLink+"\"><i class=\"fa fa-newspaper-o fa-fw\" aria-hidden=\"true\"></i></a>"
+								+"<a data-toggle=\"tooltip\" title=\"Bot analysis\" target=\"_blank\" class=\"btn btn-sm btn-primary\" href=\""+botbullsLink+"\"><i class=\"fa fa-desktop fa-fw\" aria-hidden=\"true\"></i></a>"
 								+"</div>"
 							+"</div>"
 							
@@ -503,11 +506,11 @@
 				});
 				
 				// Hide or show the quick links
-				if (quicklinksVisible === "true" ) {
+				if (quicklinksVisible === true ) {
 					$(".quicklinks").show();
 				} 
 				
-				if (quicklinksVisible !== "true" ) {
+				if (quicklinksVisible !== true ) {
 					$(".quicklinks").hide();
 				}
 				
