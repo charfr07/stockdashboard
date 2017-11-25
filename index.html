@@ -97,10 +97,6 @@
 				transition: none !important;
 			}
 			
-			.panel-body {
-				padding: 0 15px 5px 15px;
-			}
-			
 			@media (max-width: 480px) {
 			    .container {
 				padding:0;
@@ -550,51 +546,56 @@
 					  <div class="panel-body">
 						<div class="row">
 							<div class="col-sm-12 col-md-6 col-lg-3">
-								<h3>Tickers list</h3>
-								<select id="tickersList" class="form-control input-sm">
-									<option value="tlCustom">Custom (Textbox below)</option>
-									<option value="tlCanMj">Canadian MJ</option>
-									<option value="tlUsMj">American MJ</option>
-									<option value="tlCrypto">Canadian Crypto</option>
-									<option value="tlIndices">Indices</option>
-									<option value="tlEtfs">Specialized ETFs</option>
-									<option value="tlCouchPotatoEtfs">Couch potato ETFs</option>
-									<option value="tlActiveEtfs">Actively managed ETFs</option>
-									<option value="tlMining">Mining</option>
-									<option value="tlTech">Tech</option>
-									<option value="tlMiscPenny">Misc penny stocks</option>
-									<option value="tlWarrants">Warrants</option>
-									<option value="tlStinkers">Stinkers/Falling knife</option>
-								</select>
+								<label>Tickers list</label>
+								<div class="form-group">
+									<select id="tickersList" class="form-control input-sm">
+										<option value="tlCustom">Custom (Textbox below)</option>
+										<option value="tlCanMj">Canadian MJ</option>
+										<option value="tlUsMj">American MJ</option>
+										<option value="tlCrypto">Canadian Crypto</option>
+										<option value="tlIndices">Indices</option>
+										<option value="tlEtfs">Specialized ETFs</option>
+										<option value="tlCouchPotatoEtfs">Couch potato ETFs</option>
+										<option value="tlActiveEtfs">Actively managed ETFs</option>
+										<option value="tlMining">Mining</option>
+										<option value="tlTech">Tech</option>
+										<option value="tlMiscPenny">Misc penny stocks</option>
+										<option value="tlWarrants">Warrants</option>
+										<option value="tlStinkers">Stinkers/Falling knife</option>
+									</select>
+								</div>	
+									
 								<div id="customTickers">
-									<h3>Custom tickers list</h3>
+									<label>Custom tickers list</label>
 									<textarea id="tickers" style="width:100%; height: 80px"></textarea>
 								</div>
 							</div>
 							<div class="col-sm-12 col-md-6 col-lg-3">
-								<h3>Chart type</h3>
-								<select id="chartType" class="form-control input-sm">
-									<option value="freq=6&time=1">1 day / 5 minutes</option>
-									<option value="freq=5mi&time=3dy">3 days / 5 minutes</option>
-									<option value="freq=5mi&time=5dy">5 days / 5 minutes</option>
-									<option value="freq=1&time=4">1 month / daily</option>
-									<option value="freq=1&time=5">2 months / daily</option>
-									<option value="freq=1&time=6">3 months / daily</option>
-									<option value="freq=1&time=7">6 months / daily</option>
-									<option value="freq=1&time=8">1 year / daily</option>
-									<option value="freq=2&time=8">1 year / weekly</option>
-									<option value="freq=3&time=8">1 year / monthly</option>
-									<option value="freq=2&time=9">2 years / weekly</option>
-									<option value="freq=3&time=9">2 years / monthly</option>
-									<option value="freq=2&time=10">3 years / weekly</option>
-									<option value="freq=3&time=10">3 years / monthly</option>
-									<option value="freq=2&time=12">5 years / weekly</option>
-									<option value="freq=3&time=12">5 years / monthly</option>
-									<option value="freq=2&time=13">10 years / weekly</option>
-									<option value="freq=3&time=13">10 years / monthly</option>
-								</select>
+								<label>Chart type</label>
+								<div class="form-group">
+									<select id="chartType" class="form-control input-sm">
+										<option value="freq=6&time=1">1 day / 5 minutes</option>
+										<option value="freq=5mi&time=3dy">3 days / 5 minutes</option>
+										<option value="freq=5mi&time=5dy">5 days / 5 minutes</option>
+										<option value="freq=1&time=4">1 month / daily</option>
+										<option value="freq=1&time=5">2 months / daily</option>
+										<option value="freq=1&time=6">3 months / daily</option>
+										<option value="freq=1&time=7">6 months / daily</option>
+										<option value="freq=1&time=8">1 year / daily</option>
+										<option value="freq=2&time=8">1 year / weekly</option>
+										<option value="freq=3&time=8">1 year / monthly</option>
+										<option value="freq=2&time=9">2 years / weekly</option>
+										<option value="freq=3&time=9">2 years / monthly</option>
+										<option value="freq=2&time=10">3 years / weekly</option>
+										<option value="freq=3&time=10">3 years / monthly</option>
+										<option value="freq=2&time=12">5 years / weekly</option>
+										<option value="freq=3&time=12">5 years / monthly</option>
+										<option value="freq=2&time=13">10 years / weekly</option>
+										<option value="freq=3&time=13">10 years / monthly</option>
+									</select>
+								</div>
 								
-								<h3>Technical analysis indicators</h3>
+								<label>Technical analysis indicators</label>
 								<div class="form-group">
 									<select id="taIndicator" class="form-control input-sm">
 										<option value="16">Parabolic SAR</option>
@@ -614,7 +615,7 @@
 								</div>
 							</div>
 							<div class="col-sm-12 col-md-6 col-lg-3">
-								<h3>Layout</h3>
+								<label>Layout</label>
 								<div class="form-group">
 									<select id="chartCss" class="form-control input-sm">
 										<option value="chart col-xs-12 col-sm-6 col-md-4 col-lg-3">Automatic (normal/default)</option>
@@ -629,7 +630,7 @@
 									</select>
 								</div>
 								
-								<h3>Theme</h3>
+								<label>Theme</label>
 								<div class="form-group">
 									<select id="theme" class="form-control input-sm">
 										<option value="Dark theme (Slate)">Dark theme (Slate)</option>
@@ -639,7 +640,7 @@
 									</select>
 								</div>
 								
-								<h3>Chart style</h3>
+								<label>Chart style</label>
 								<div class="form-group">
 									<select id="chartStyle" class="form-control input-sm">
 										<option value="36">Dark-gray yellow/red candles</option>
@@ -661,7 +662,7 @@
 								</div>
 							</div>
 							<div class="col-sm-12 col-md-6 col-lg-3">
-								<h3>Refresh period</h3>
+								<label>Refresh period</label>
 								<div class="form-group">
 									<div class="input-group">
 										<input id="timerDelay" type="number" class="form-control input-sm" />
@@ -679,7 +680,6 @@
 									</label>
 								</div>
 								
-								<h3>Quick links</h3>
 								<div class="form-check">
 									<label class="form-check-label">
 										<input id="quicklinksVisible" class="form-check-input" type="checkbox">
