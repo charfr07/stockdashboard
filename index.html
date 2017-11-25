@@ -4,10 +4,11 @@
 		<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/sandstone/bootstrap.min.css" Title="White theme (Sandstone)" crossorigin="anonymous" rel="stylesheet">
 		<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" Title="White theme (Flatly)" crossorigin="anonymous" rel="stylesheet">	
 		<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cyborg/bootstrap.min.css" Title="Black theme (Cyborg)" crossorigin="anonymous" rel="stylesheet">	
-
+		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.25/jquery.fancybox.min.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.25/jquery.fancybox.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone.min.js"></script>
@@ -191,6 +192,11 @@
 					refreshContent();
 				});
 				
+				$("#quicklinksVisible").on( "change", function() {
+					saveParameters();
+					refreshContent();
+				});
+				
 				$("#tickersList").on( "change", function() {
 					saveParameters();
 					refreshContent();
@@ -243,6 +249,8 @@
 				var defaultTickersList = "tlCustom";
 				var defaultTheme = "Dark theme (Slate)";
 				var defaultChartStyle = "1145";
+				var defaultQuicklinksVisible = "true";
+				var defaultProgressBarVisible = "true";
 
 				if (typeof(Storage) !== "undefined") {
 					$("#tickers").val( localStorage.getItem("tickers") || defaultTickers );
@@ -257,6 +265,10 @@
 					
 					if ( localStorage.getItem("progressBarVisible") == "true" ) {
 						$("#progressBarVisible").prop("checked",true);
+					}
+					
+					if ( localStorage.getItem("quicklinksVisible") == "true" ) {
+						$("#quicklinksVisible").prop("checked",true);
 					}
 					
 					if ( localStorage.getItem("parametersShown") == "false" ) {
@@ -275,6 +287,8 @@
 					$("#tickersList").val( defaultTickersList );
 					$("#progressBarVisible").val( defaultProgressBarVisible );
 					$("#progressBarVisible").prop("checked",true);
+					$("#quicklinksVisible").val( defaultQuicklinksVisible );
+					$("#quicklinksVisible").prop("checked",true);
 				}	
 			}
 			
@@ -291,6 +305,7 @@
 					var theme = $("#theme").val();
 					var chartStyle = $("#chartStyle").val();
 					var progressBarVisible = $("#progressBarVisible").is(":checked");
+					var quicklinksVisible = $("#quicklinksVisible").is(":checked");
 					
 					localStorage.setItem("tickers", tickers);
 					localStorage.setItem("chartType", chartType);
@@ -302,6 +317,7 @@
 					localStorage.setItem("taIndicator2", taIndicator2);
 					localStorage.setItem("tickersList", tickersList);
 					localStorage.setItem("progressBarVisible", progressBarVisible);
+					localStorage.setItem("quicklinksVisible", quicklinksVisible);
 					localStorage.setItem("parametersShown", $("#collapseParameters").attr("aria-expanded") );
 				} else {
 					// No where to save info :(
@@ -353,6 +369,7 @@
 				var taIndicator2 = $("#taIndicator2").val();
 				var tickersList = $("#tickersList").val();
 				var progressBarVisible = localStorage.getItem("progressBarVisible");
+				var quicklinksVisible = localStorage.getItem("quicklinksVisible");
 				
 				// Refresh the theme
 				$('link[title][rel="stylesheet"]').prop('disabled', true);
@@ -411,6 +428,7 @@
 				if (progressBarVisible !== "true" && $(".progress").is(":visible") == true ) {
 					$(".progress").hide();
 				}
+				
 
 				/*
 				var bidPrice = "$1.99";
@@ -423,6 +441,33 @@
 					if ( !(value.trim()) || (value.indexOf("CA:") == -1 && value.indexOf("US:") == -1) ) {
 						return true; // continue
 					} else {
+						var rawTicker;
+						var shortdataLink;
+						var insiderLink;
+						var stockhouseLink;
+						var stockwatchLink
+						
+						if (value.indexOf("CA:") !== -1)
+						{
+							rawTicker = value.replace("CA:","");
+							
+							shortdataLink = "http://shortdata.ca/?sym="+rawTicker;
+							stockhouseLink = "http://www.stockhouse.com/companies/bullboard?symbol=T."+rawTicker;
+							stockwatchLink = "http://www.stockwatch.com/Quote/Detail.aspx?C:"+rawTicker;
+							insiderLink = "https://www.canadianinsider.com/company?menu_tickersearch="+rawTicker;
+						}
+						
+						if (value.indexOf("US:") !== -1) 
+						{
+							rawTicker = value.replace("US:","");
+						
+							shortdataLink = "http://nakedshortreport.com/company/"+rawTicker;
+							stockhouseLink = "http://www.stockhouse.com/companies/bullboard?symbol="+rawTicker;
+							stockwatchLink = "http://www.stockwatch.com/Quote/Detail.aspx?symbol="+rawTicker+"&region=U";
+							insiderLink = "https://www.insidertracking.com/company?ticker="+rawTicker;
+							
+						}
+					
 						var imgLink = "http://realtimebigchart.gtm.idmanagedsolutions.com/custom/fidelity-com/big.chart?nosettings=1&"
 							+"symb="+value
 							+"&uf="+taIndicator
@@ -443,22 +488,43 @@
 							+"&mocktick=1";
 					
 						$("#chart_container").append(
-							"<div class=\""+chartCss+"\"><a data-fancybox href=\""+imgLink+"\"><img width=\"100%\" src=\""+imgLink+"\" onerror=\"this.style.display='none'\"/></a>"
-							+"<div class=\"tickerOverlay\" >"+value+"</div>"
-							/*+"<div style=\"top: 0px\" class=\"tickerInfoOverlay\" id=\"IndxSymbol1\" >Bid: "+bidPrice+"</div>"
-							+"<div style=\"top: 18px\"class=\"tickerInfoOverlay\" id=\"IndxSymbol1\" >Ask: "+askPrice+"</div>"
-							+"<div style=\"top: 36px\" class=\"tickerInfoOverlay\" id=\"IndxSymbol1\" >Last: "+lastPrice+"</div>"*/
+							"<div class=\""+chartCss+"\">"
+								+"<a data-fancybox href=\""+imgLink+"\"><img width=\"100%\" src=\""+imgLink+"\" onerror=\"this.style.display='none'\"/></a>"
+								+"<div class=\"tickerOverlay\" >"+value+"</div>"
+								/*+"<div style=\"top: 0px\" class=\"tickerInfoOverlay\" id=\"IndxSymbol1\" >Bid: "+bidPrice+"</div>"
+								+"<div style=\"top: 18px\"class=\"tickerInfoOverlay\" id=\"IndxSymbol1\" >Ask: "+askPrice+"</div>"
+								+"<div style=\"top: 36px\" class=\"tickerInfoOverlay\" id=\"IndxSymbol1\" >Last: "+lastPrice+"</div>"*/
+								+"<div class=\"quicklinks\"\>"
+								+"<a data-toggle=\"tooltip\" title=\"Short data\" target=\"_blank\" class=\"btn btn-sm btn-danger\" href=\""+shortdataLink+"\"><i class=\"fa fa-level-down fa-fw\" aria-hidden=\"true\"></i></a>"
+								+"<a data-toggle=\"tooltip\" title=\"Insider info\" target=\"_blank\" class=\"btn btn-sm btn-default\" href=\""+insiderLink+"\"><i class=\"fa fa-user-secret fa-fw\" aria-hidden=\"true\"></i></a>"
+								+"<a data-toggle=\"tooltip\" title=\"Stockhouse\" target=\"_blank\" class=\"btn btn-sm btn-warning\" href=\""+stockhouseLink+"\"><i class=\"fa fa-bullhorn fa-fw\" aria-hidden=\"true\"></i></a>"
+								+"<a data-toggle=\"tooltip\" title=\"Stockwatch news\" target=\"_blank\" class=\"btn btn-sm btn-primary\" href=\""+stockwatchLink+"\"><i class=\"fa fa-newspaper-o fa-fw\" aria-hidden=\"true\"></i></a>"
+								+"</div>"
 							+"</div>"
+							
 						);
 					}
 				});
 				
+				// Hide or show the quick links
+				if (quicklinksVisible === "true" ) {
+					$(".quicklinks").show();
+				} 
+				
+				if (quicklinksVisible !== "true" ) {
+					$(".quicklinks").hide();
+				}
+				
+				// Hide or show the custom ticker list
 				if ($("#tickersList").val() == "tlCustom") {
 					$("#customTickers").show();
 				} 
 				else {	
 					$("#customTickers").hide();
 				}
+				
+				// Make bootstrap tooltips for the quick links
+				$('[data-toggle="tooltip"]').tooltip();
 				
 				startCounter();
 			}
@@ -610,6 +676,14 @@
 									<label class="form-check-label">
 										<input id="progressBarVisible" class="form-check-input" type="checkbox">
 										Show refresh progress bar
+									</label>
+								</div>
+								
+								<h3>Quick links</h3>
+								<div class="form-check">
+									<label class="form-check-label">
+										<input id="quicklinksVisible" class="form-check-input" type="checkbox">
+										Show quick links
 									</label>
 								</div>
 							</div>
