@@ -124,31 +124,31 @@
 			var timerValue = 20;	// Current value of the clock
 			
 			/* Preset ticker lists */
-			var tlCanMj = "CA:WEED,CA:ACB,CA:APH,CA:OGI,CA:LEAF,CA:WMD,CA:CMED,CA:THCX,CA:MJN,CA:EMC,CA:EMH,CA:ABCN,CA:NINE,CA:CBW,CA:HVST,CA:IMH";
-			var tlUsMj = "US:XXII,US:MRPHF,US:TRTC,US:DIGP,US:GRWG,US:CNNRF,US:ZYNE,US:MSRT,US:SLTK,US:MCIG,US:KSHB,US:GWPH,US:CVSI,US:HEMP,US:VPGDF,US:LHSIF";
+			var tlCanMj = "TSX-WEED,TSX-ACB,TSX-APH,TSXV-OGI,TSX-LEAF,TSXV-WMD,TSX-CMED,TSXV-THCX,TSXV-MJN,TSXV-EMC,TSXV-EMH,TSXV-ABCN,TSXV-NINE,TSX-CBW,TSX-HVST,TSXV-IMH";
+			var tlUsMj = "AMEX-XXII,AMEX-MRPHF,AMEX-TRTC,AMEX-DIGP,AMEX-GRWG,AMEX-CNNRF,AMEX-ZYNE,OTC-MSRT,AMEX-SLTK,OTC-MCIG,AMEX-KSHB,AMEX-GWPH,AMEX-CVSI,AMEX-HEMP,AMEX-VPGDF,AMEX-LHSIF";
 			
-			var tlEtfs = "CA:HVU,CA:HUV,CA:HVI,CA:HOD,CA:HOU,CA:HGU,CA:HGD,CA:HND,CA:HNU";
-			var tlCouchPotatoEtfs = "US:SPY,CA:XSP,CA:VSP,CA:XIC,CA:VCN,CA:XUU,CA:XEF,CA:VEE,CA:VSB";
-			var tlActiveEtfs = "CA:DXP,CA:DXU,CA:DXG,CA:DXC,CA:DXF,CA:VVO,CA:VVL,CA:VMO,CA:VLQ,CA:ZEUS,CA:MIND,CA:DXZ";
+			var tlEtfs = "TSX-HVU,TSX-HUV,TSX-HVI,TSX-HOD,TSX-HOU,TSX-HGU,TSX-HGD,TSX-HND,TSX-HNU";
+			var tlCouchPotatoEtfs = "AMEX-SPY,TSX-XSP,TSX-VSP,TSX-XIC,TSX-VCN,TSX-XUU,TSX-XEF,TSX-VEE,TSX-VSB";
+			var tlActiveEtfs = "TSX-DXP,TSX-DXU,TSX-DXG,TSX-DXC,TSX-DXF,TSX-VVO,TSX-VVL,TSX-VMO,TSX-VLQ,TSX-ZEUS,TSX-MIND,TSX-DXZ";
 			
-			var tlIndices = "US:SPY,CA:HVU,CA:HUV,CA:HVI";
+			var tlIndices = "NASDAQ-SPY,TSX-HVU,TSX-HUV,TSX-HVI";
 
-			var tlMiningGold = "CA:HGU,CA:HGD,CA:ABX,CA:NVO,CA:ELD,CA:TXG,CA:ALO";
-			var tlMiningLithium = "CA:NMX,CA:NLC,CA:ORL,CA:LAC,CA:ML,CA:LIX,CA:QMC";
-			var tlMiningCobalt = "CA:FCC,CA:ECS";
+			var tlMiningGold = "TSX-HGU,TSX-HGD,TSX-ABX,TSX-NVO,TSX-ELD,TSX-TXG,TSX-ALO";
+			var tlMiningLithium = "TSX-NMX,TSXV-NLC,TSX-ORL,TSX-LAC,TSXV-ML,TSXV-LIX,TSXV-QMC";
+			var tlMiningCobalt = "TSXV-FCC,TSX-ECS";
 			var tlMining = tlMiningCobalt + "," + tlMiningLithium + "," + tlMiningGold;
 			
-			var tlHealthcare = "CA:PLI,CA:VPT,CA:VRX,CA:NVCN,CA:RHT";
+			var tlHealthcare = "TSX-PLI,TSXV-VPT,TSX-VRX,TSX-NVCN,TSX-RHT";
 			
-			var tlFinancial = "CA:BMO,CA:RY,CA:TD,CA:FGD,CA:FTEC";
-			var tlIndustrial = "CA:BBDB,CA:PYR";
-			var tlConsumer = "CA:DOL,CA:AIM";
-			var tlTech = "US:AMZN,US:AAPL,US:GOOG,US:TSLA,US:FB,US:INTC,CA:SHOP,US:NVDA,US:AMD,US:BIDU,US:ROKU";
-			var tlMiscPenny = "CA:VPT,CA:FGD,CA:JET,CA:MXL,CA:PYR,CA:ION,CA:BIOA,CA:MOO";
-			var tlWarrants = "CA:NMX.WT,CA:JET.WT,CA:JET.WTA,CA:CBW.WT,CA:OGI.WT,CA:EMC.WT,CA:ACB.WT,CA:ALO.WT,CA:ALO.WTA"
+			var tlFinancial = "TSX-BMO,TSX-RY,TSX-TD,TSX-FGD,TSX-FTEC";
+			var tlIndustrial = "TSX-BBDB,TSX-PYR";
+			var tlConsumer = "TSX-DOL,TSX-AIM";
+			var tlTech = "NASDAQ-AMZN,NASDAQ-AAPL,NASDAQ-GOOG,NASDAQ-TSLA,NASDAQ-FB,NASDAQ-INTC,TSX-SHOP,NASDAQ-NVDA,NASDAQ-AMD,NASDAQ-BIDU,NASDAQ-ROKU";
+			var tlMiscPenny = "TSX-VPT,TSX-FGD,TSX-JET,TSX-MXL,TSX-PYR,TSX-ION,TSX-BIOA,TSX-MOO";
+			var tlWarrants = "TSX-NMX.WT,TSX-JET.WT,TSX-JET.WTA,TSX-CBW.WT,TSX-OGI.WT,TSX-EMC.WT,TSX-ACB.WT,TSX-ALO.WT,TSX-ALO.WTA"
 			
-			var tlCrypto = "CA:BLOC,CA:FTEC,CA:HIVE,CA:ID,CA:MOGO,CA:LTV,CA:DM,CA:QNC,CA:BTL,CA:XAU,CA:FUND,CA:MXL";
-			var tlStinkers = "CA:VPT,US:NVCN,CA:NVCN,CA:ELD,CA:EFX,CA:TXG,CA:JE,CA:SNR,CA:ALO,CA:DLS";
+			var tlCrypto = "TSX-BLOC,TSX-FTEC,TSX-HIVE,TSX-ID,TSX-MOGO,TSX-LTV,TSX-DM,TSX-QNC,TSX-BTL,TSX-XAU,TSX-FUND,TSX-MXL";
+			var tlStinkers = "TSX-VPT,AMEX-NVCN,TSX-NVCN,TSX-ELD,TSX-EFX,TSX-TXG,TSX-JE,TSX-SNR,TSX-ALO,TSX-DLS";
 		
 			// On page load
 			$( document ).ready(function() {
@@ -249,7 +249,7 @@
 			
 			// Load parameters
 			function loadParameters() {
-				var defaultTickers =  "US:SPY,CA:HVU,CA:HVI,CA:PLI,CA:NMX,CA:NVO,CA:BBDB,CA:SHOP,CA:WEED,CA:APH,CA:ACB,CA:THCX,CA:VPT,CA:FGD,CA:PYR,CA:JET";
+				var defaultTickers =  "AMEX-SPY,TSX-HVU,TSXV-VPT";
 				var defaultChartType = "freq=6&time=1";
 				var defaultTimerDelay = 20;
 				var defaultChartCss = "chart col-xs-12 col-sm-6 col-md-4 col-lg-3";
@@ -367,7 +367,7 @@
 				
 				// Get the parameters for the charts
 				$("#chart_container").html("");
-				var tickers = "US:SPY";
+				var tickers = "AMEX-SPY";
 				var chartType = $("#chartType").val();
 				var chartCss = $("#chartCss").val();
 				var theme = $("#theme").val();
@@ -410,7 +410,12 @@
 				
 				$.each(tickers, function( index, value ) {
 					// Don't try to fetch charts for invalid tickers
-					if ( !(value.trim()) || (value.indexOf("CA:") == -1 && value.indexOf("US:") == -1) ) {
+					if ( !(value.trim()) 
+						|| (	value.indexOf("TSX-") == -1 
+							&& 	value.indexOf("TSXV-") == -1
+							&& 	value.indexOf("NASDAQ-") == -1
+							&& 	value.indexOf("AMEX-") == -1 ) ) 
+					{
 						return true; // continue
 					} else {
 						var rawTicker;
@@ -419,10 +424,15 @@
 						var stockhouseLink;
 						var stockwatchLink;
 						var botbullsLink;
+						var tradingviewLink;
+						var bigChartsTicker;
 						
-						if (value.indexOf("CA:") !== -1)
+
+						tradingviewLink = "https://www.tradingview.com/symbols/"+value;
+						if ( value.indexOf("TSX-") !== -1 || value.indexOf("TSXV-") !== -1 )
 						{
-							rawTicker = value.replace("CA:","");
+							rawTicker = value.replace("TSX-","").replace("TSXV-","");
+							bigChartsTicker = "CA:"+rawTicker;
 							
 							shortdataLink = "http://shortdata.ca/?sym="+rawTicker;
 							stockhouseLink = "http://www.stockhouse.com/companies/bullboard?symbol=T."+rawTicker;
@@ -431,9 +441,10 @@
 							botbullsLink = "https://www.canadabulls.com/SearchList.aspx?lang=en&SearchText="+rawTicker;
 						}
 						
-						if (value.indexOf("US:") !== -1) 
+						if ( value.indexOf("NASDAQ-") !== -1 || value.indexOf("AMEX-") !== -1) 
 						{
-							rawTicker = value.replace("US:","");
+							rawTicker = value.replace("NASDAQ-","").replace("AMEX-","");
+							bigChartsTicker = "US:"+rawTicker;
 						
 							shortdataLink = "http://nakedshortreport.com/company/"+rawTicker;
 							stockhouseLink = "http://www.stockhouse.com/companies/bullboard?symbol="+rawTicker;
@@ -443,7 +454,7 @@
 						}
 					
 						var imgLink = "http://realtimebigchart.gtm.idmanagedsolutions.com/custom/fidelity-com/big.chart?nosettings=1&"
-							+"symb="+value
+							+"symb="+bigChartsTicker
 							+"&uf="+taIndicator
 							+"&type=4"
 							+"&size=1"
@@ -474,6 +485,7 @@
 								+"<a data-toggle=\"tooltip\" title=\"Stockhouse\" target=\"_blank\" class=\"btn btn-sm btn-warning\" href=\""+stockhouseLink+"\"><i class=\"fa fa-bullhorn fa-fw\" aria-hidden=\"true\"></i></a>&nbsp;"
 								+"<a data-toggle=\"tooltip\" title=\"Stockwatch news\" target=\"_blank\" class=\"btn btn-sm btn-primary\" href=\""+stockwatchLink+"\"><i class=\"fa fa-newspaper-o fa-fw\" aria-hidden=\"true\"></i></a>&nbsp;"
 								+"<a data-toggle=\"tooltip\" title=\"Bot analysis\" target=\"_blank\" class=\"btn btn-sm btn-primary\" href=\""+botbullsLink+"\"><i class=\"fa fa-desktop fa-fw\" aria-hidden=\"true\"></i></a>&nbsp;"
+								+"<a data-toggle=\"tooltip\" title=\"TradingView\" target=\"_blank\" class=\"btn btn-sm btn-primary\" href=\""+tradingviewLink+"\"><i class=\"fa fa-line-chart fa-fw\" aria-hidden=\"true\"></i></a>&nbsp;"
 								+"</div>"
 							+"</div>"
 							
@@ -557,6 +569,7 @@
 								<div id="customTickers">
 									<label>Custom tickers list</label>
 									<textarea id="tickers" style="width:100%; height: 80px"></textarea>
+									<span>New syntax november 27th: TSX-WEED,AMEX-SPY,NASDAQ-AAPL,TSXV-EMC</span>
 								</div>
 							</div>
 							<div class="col-sm-12 col-md-6 col-lg-3">
