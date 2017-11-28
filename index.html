@@ -427,8 +427,8 @@
 						var tradingviewLink;
 						var bigChartsTicker;
 						
-
-						tradingviewLink = "https://www.tradingview.com/symbols/"+value;
+						tradingviewLink = "https://www.tradingview.com/chart/?symbol="+value.replace("-",":");
+						
 						if ( value.indexOf("TSX-") !== -1 || value.indexOf("TSXV-") !== -1 )
 						{
 							rawTicker = value.replace("TSX-","").replace("TSXV-","");
