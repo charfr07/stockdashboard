@@ -444,7 +444,7 @@
 						
 						if ( value.indexOf("NASDAQ-") !== -1 || value.indexOf("AMEX-") !== -1 || value.indexOf("OTC-") !== -1) 
 						{
-							rawTicker = value.replace("NASDAQ-","").replace("AMEX-","");
+							rawTicker = value.replace("NASDAQ-","").replace("AMEX-","").replace("OTC-","");
 							bigChartsTicker = "US:"+rawTicker;
 						
 							shortdataLink = "http://nakedshortreport.com/company/"+rawTicker;
