@@ -414,6 +414,7 @@
 						|| (	value.indexOf("TSX-") == -1 
 							&& 	value.indexOf("TSXV-") == -1
 							&& 	value.indexOf("NASDAQ-") == -1
+						    	&& 	value.indexOf("OTC-") == -1
 							&& 	value.indexOf("AMEX-") == -1 ) ) 
 					{
 						return true; // continue
@@ -441,7 +442,7 @@
 							botbullsLink = "https://www.canadabulls.com/SearchList.aspx?lang=en&SearchText="+rawTicker;
 						}
 						
-						if ( value.indexOf("NASDAQ-") !== -1 || value.indexOf("AMEX-") !== -1) 
+						if ( value.indexOf("NASDAQ-") !== -1 || value.indexOf("AMEX-") !== -1 || value.indexOf("OTC-") !== -1) 
 						{
 							rawTicker = value.replace("NASDAQ-","").replace("AMEX-","");
 							bigChartsTicker = "US:"+rawTicker;
