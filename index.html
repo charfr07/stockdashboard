@@ -379,9 +379,9 @@
 					newUrl = src.substr(0, src.indexOf('rand=')) + "rand="+randomNumber; 
 						
 					if (updateSequentially) {
-						$(this).delay(delayPerImg*1000*i).fadeTo( "fast", 0 ).attr("src", newUrl).fadeTo( "fast", 1 );
+						$(this).delay(delayPerImg*1000*i).attr("src", newUrl);
 					} else {
-						$(this).fadeTo( "fast", 0 ).attr("src", newUrl).fadeTo( "fast", 1 );
+						$(this).attr("src", newUrl);
 					}
 				});
 				
