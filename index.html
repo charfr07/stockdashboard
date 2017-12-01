@@ -331,8 +331,17 @@
 				}
 			}
 			
+			var counterRunning = false;
+			
 			// Starts the counter 
-			function startCounter() {
+			function startCounter(updateSequentially) {
+				if (counterRunning)
+				{
+					return;
+				}
+			
+				clearInterval(scheduler);	// Let's kill the clock so it doesn't run multiple ones at the same time
+				
 				var hourInNewYork = moment().tz('America/New_York').format('H');
 
 				// If we are outside market hours (assuming 8:00 to 5:00), lets make the timer much longer (in case user goes afk with dashboard still active)
@@ -350,13 +359,33 @@
 					width: "100%"
 				}, timerValue*1000);
 				
+				
 				scheduler = setInterval( function() {
 					timerValue--;
 					$('#delayValue').html(timerValue);
 					if (timerValue === 0) {
-						refreshContent();
+						counterRunning = false;
+						startCounter();
 					}    
 				}, 1000 );
+				
+				
+				// If we have 10 images and we wanna refresh every 10sec, then we refresh an image every 1 second
+				var delayPerImg = timerValue / $('img').length;
+				
+				$('img').each(function(i) { 
+					var randomNumber = Math.floor((Math.random() * 100000) + 1); // Need a random number for chart IDs
+					var src = $(this).attr("src");
+					newUrl = src.substr(0, src.indexOf('rand=')) + "rand="+randomNumber; 
+						
+					if (updateSequentially) {
+						$(this).delay(delayPerImg*1000*i).fadeTo( "fast", 0 ).attr("src", newUrl).fadeTo( "fast", 1 );
+					} else {
+						$(this).fadeTo( "fast", 0 ).attr("src", newUrl).fadeTo( "fast", 1 );
+					}
+				});
+				
+				
 			}
 
 			// Refresh all the charts
@@ -461,7 +490,6 @@
 							+"&size=1"
 							+"&style="+chartStyle
 							+"&"+chartType
-							+"&rand="+randomNumber
 							+"&compidx=aaaaa:0"
 							+"&comp="
 							+"&ma=0"
@@ -471,7 +499,8 @@
 							+"&lf3=0"
 							+"&height=300"
 							+"&width=500"
-							+"&mocktick=1";
+							+"&mocktick=1"
+							+"&rand="+randomNumber;
 					
 						$("#chart_container").append(
 							"<div class=\""+chartCss+"\">"
