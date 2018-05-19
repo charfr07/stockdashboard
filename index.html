@@ -60,7 +60,7 @@
 				z-index:1000;
 				visibility:visible;
 				font-family: "Arial"; 
-				font-size: 40pt; 
+				font-size: 34pt; 
 				font-weight: bold;
 				color:grey;opacity:0.4;
 				filter:alpha(opacity=40);
@@ -127,19 +127,20 @@
 			var tlCanMj = "TSX-WEED,TSX-ACB,TSX-APH,TSXV-GENE,TSXV-OGI,TSX-LEAF,TSXV-CRON,TSX-TGOD,TSXV-HIP,TSXV-WMD,TSXV-THCX,TSXV-EMC,TSXV-EMH,TSXV-KALY,TSXV-RTI,TSXV-ABCN,TSXV-NINE,TSX-CBW,TSXV-HVT";
 			var tlUsMj = "AMEX-XXII,OTC-MRPHF,OTC-TRTCD,OTC-DIGP,OTC-GRWG,OTC-CNNRF,NASDAQ-ZYNE,OTC-MSRT,OTC-MPXEF,OTC-SLTK,OTC-MCIG,OTC-KSHB,OTC-GWPH,OTC-CVSI,OTC-HEMP,OTC-VPGDF,OTC-LHSIF";
 			
-			var tlEtfs = "TSX-HVU,TSX-HUV,TSX-HVI,TSX-HOD,TSX-HOU,TSX-HGU,TSX-HGD,TSX-HND,TSX-HNU";
+			var tlEtfs = "TSX-HVU,TSX-HUV,TSX-HVI,TSX-HOD,TSX-HOU,TSX-HGU,TSX-HGD,TSX-HND,TSX-HNU,TSX-HEF";
 			var tlCouchPotatoEtfs = "AMEX-SPY,TSX-XSP,TSX-VSP,TSX-XIC,TSX-VCN,TSX-XUU,TSX-XEF,TSX-VEE,TSX-VSB,TSX-VGRO";
 			var tlActiveEtfs = "TSX-DXP,TSX-DXU,TSX-DXG,TSX-DXC,TSX-DXF,TSX-VVO,TSX-VVL,TSX-VMO,TSX-VLQ,TSX-ZEUS,TSX-MIND";
 			
 			var tlIndices = "NASDAQ-SPY,NASDAQ-QQQ,TSX-XIU,TSX-HVU,TSX-HUV,TSX-HVI";
 
 			var tlMiningGold = "TSX-HGU,TSX-HGD,TSX-ABX,TSX-KAT,TSX-YRI,TSX-AGI,TSX-NVO,TSX-ELD,TSX-TXG,TSX-ALO,TSXV-MQR";
-			var tlMiningLithium = "TSX-NMX,TSXV-NLC,TSX-ORL,TSX-LAC,TSXV-CRE,TSXV-ML,TSXV-AAL,TSXV-QMC,TSXV-DGO";
+			var tlMiningLithium = "NYSE-LIT,TSX-NMX,TSXV-NLC,TSX-ORL,TSX-LAC,TSXV-CRE,TSXV-ML,TSXV-AAL,TSXV-QMC,TSXV-DGO,NYSE-SQM";
 			var tlMiningCobalt = "TSXV-FCC,TSX-ECS,TSX-UEX";
 			var tlMining = tlMiningCobalt + "," + tlMiningLithium + "," + tlMiningGold;
 			
 			var tlHealthcare = "TSX-PLI,TSXV-VPT,TSX-VRX,TSX-NVCN,TSX-RHT";
 			
+			var tlEnergy = "TSX-HOU,TSX-HNU,TSX-MEG,TSX-ENB,TSX-SU,TSX-CVE,TSX-CNQ,TSX-PD";
 			var tlFinancial = "TSX-BMO,TSX-RY,TSX-TD,TSX-BNS,TSX-CWB,TSX-CM,TSX-FGD,TSX-FTEC";
 			var tlIndustrial = "TSX-BBDB,TSXV-PYR,TSXV-ENW,TSXV-DYA";
 			var tlConsumer = "TSX-DOL,TSX-AIM";
@@ -471,9 +472,9 @@
 							botbullsLink = "https://www.canadabulls.com/SearchList.aspx?lang=en&SearchText="+rawTicker;
 						}
 						
-						if ( value.indexOf("NASDAQ-") !== -1 || value.indexOf("AMEX-") !== -1 || value.indexOf("OTC-") !== -1) 
+						if ( value.indexOf("NASDAQ-") !== -1 || value.indexOf("AMEX-") !== -1 || value.indexOf("OTC-") !== -1 || value.indexOf("NYSE-") !== -1) 
 						{
-							rawTicker = value.replace("NASDAQ-","").replace("AMEX-","").replace("OTC-","");
+							rawTicker = value.replace("NASDAQ-","").replace("AMEX-","").replace("OTC-","").replace("NYSE-","");
 							bigChartsTicker = "US:"+rawTicker;
 						
 							shortdataLink = "http://nakedshortreport.com/company/"+rawTicker;
@@ -585,6 +586,7 @@
 										
 										<option value="tlIndices">Indices</option>
 										<option value="tlCrypto">Canadian Crypto</option>
+										<option value="tlEnergy">Energy</option>
 										<option value="tlFinancial">Financial</option>
 										<option value="tlIndustrial">Industrial</option>
 										<option value="tlTech">Tech.</option>
