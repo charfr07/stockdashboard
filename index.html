@@ -241,10 +241,6 @@
 					saveParameters();
 				})
 				
-				$("#tickers").on( "keyup", function() {
-					$(this).val($(this).val().toUpperCase());
-				});
-				
 				refreshContent();
 			});
 			
@@ -302,6 +298,8 @@
 			
 			// Save parameters
 			function saveParameters() {
+				$("#tickers").val($(this).val().toUpperCase());
+			
 				if (typeof(Storage) !== "undefined") {
 					var tickers = $("#tickers").val();
 					var chartType = $("#chartType").val();
