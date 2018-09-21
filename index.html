@@ -298,7 +298,7 @@
 			
 			// Save parameters
 			function saveParameters() {
-				$("#tickers").val($(this).val().toUpperCase());
+				$("#tickers").val($("#tickers").val().toUpperCase());
 			
 				if (typeof(Storage) !== "undefined") {
 					var tickers = $("#tickers").val();
