@@ -506,7 +506,7 @@
 					
 						$("#chart_container").append(
 							"<div class=\""+chartCss+"\">"
-								+"<a data-fancybox href=\""+imgLink+"\"><img width=\"100%\" src=\""+imgLink+"\" /></a>"
+								+"<a data-fancybox href=\""+imgLink+"\"><img width=\"100%\" src=\""+imgLink+"\" onerror=\"this.style.display='none'\"/></a>"
 								+"<div class=\"tickerOverlay\" >"+value+"</div>"
 								/*+"<div style=\"top: 0px\" class=\"tickerInfoOverlay\" id=\"IndxSymbol1\" >Bid: "+bidPrice+"</div>"
 								+"<div style=\"top: 18px\"class=\"tickerInfoOverlay\" id=\"IndxSymbol1\" >Ask: "+askPrice+"</div>"
