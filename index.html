@@ -159,56 +159,43 @@
 					refreshContent();
 				});
 				
-				$("#tickers").on( "keyup", function() {
-					saveParameters();
-				});
-				
 				$("#tickers").on( "change", function() {
 					refreshContent();
 				});
 				
 				$("#chartType").on( "change", function() {
-					saveParameters();
 					refreshContent();
 				});
 				
 				$("#taIndicator").on( "change", function() {
-					saveParameters();
 					refreshContent();
 				});
 				
 				$("#taIndicator2").on( "change", function() {
-					saveParameters();
 					refreshContent();
 				});
 				
 				$("#chartCss").on( "change", function() {
-					saveParameters();
 					refreshContent();
 				});
 				
 				$("#theme").on( "change", function() {
-					saveParameters();
 					refreshContent();
 				});
 				
 				$("#chartStyle").on( "change", function() {
-					saveParameters();
 					refreshContent();
 				});
 				
 				$("#progressBarVisible").on( "change", function() {
-					saveParameters();
 					refreshContent();
 				});
 				
 				$("#quicklinksVisible").on( "change", function() {
-					saveParameters();
 					refreshContent();
 				});
 				
 				$("#tickersList").on( "change", function() {
-					saveParameters();
 					refreshContent();
 					
 					if ($(this).val() === "tlCustom") {
@@ -221,7 +208,6 @@
 				
 				$("#timerDelay").on( "keyup", function() {
 					if ($(this).val() < 10) {
-						alert('Minimum value is 10');
 						$(this).val(10);
 					}
 				
@@ -230,7 +216,6 @@
 				
 				$("#timerDelay").on( "change", function() {
 					if ($(this).val() < 10) {
-						alert('Minimum value is 10');
 						$(this).val(10);
 					}
 					
@@ -389,6 +374,8 @@
 
 			// Refresh all the charts
 			function refreshContent() {
+				saveParameters();
+				
 				var randomNumber = Math.floor((Math.random() * 100000) + 1); // Need a random number for chart IDs
 				
 				clearInterval(scheduler);	// Let's kill the clock so it doesn't run multiple ones at the same time
