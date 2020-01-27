@@ -1,3 +1,4 @@
+
 <html>
 	<head>
 		<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/slate/bootstrap.min.css" Title="Dark theme (Slate)" crossorigin="anonymous" rel="stylesheet">
@@ -129,7 +130,7 @@
 			var timerValue = 20;	// Current value of the clock
 			
 			/* Preset ticker lists */
-			var tlCanMj = "TSX-WEED,TSX-ACB,TSX-APHA,TSX-HEXO,TSXV-OGI,TSX-CRON,TSX-VFF,TSX-TRST,TSX-TGOD,TSX-FIRE,TSXV-ENW,TSXV-GENE,TSXV-RIV,TSXV-WMD,TSXV-EMH,TSXV-RTI,TSXV-KHRN,TSXV-TBP,TSXV-KLY";
+			var tlCanMj = "TSX-WEED,TSX-ACB,TSX-APHA,TSX-HEXO,TSX-OGI,TSX-CRON,TSX-VFF,TSX-TRST,TSX-TGOD,TSX-FIRE,TSXV-ENW,TSXV-GENE,TSXV-RIV,TSXV-WMD,TSXV-EMH,TSXV-RTI,TSXV-KHRN,TSXV-TBP,TSXV-KLY";
 			var tlUsMj = "NASDAQ-TLRY,NASDAQ-NBEV,AMEX-XXII,NASDAQ-GWPH,OTC-TRTC,OTC-DIGP,OTC-GRWG,NASDAQ-ZYNE,OTC-MSRT,OTC-MCIG,OTC-KSHB,OTC-CVSI,OTC-HEMP,OTC-TGIFF,OTC-LHSIF";
 			var tlTobBev = "NYSE-STZ,NYSE-DEO,NASDAQ-PEP,NYSE-TAP,NYSE-KO,NYSE-PM,NYSE-MO,NYSE-BTI,NYSE-PYX";
 			
@@ -523,6 +524,29 @@
 							+"&mocktick=1"
 							+"&rand="+randomNumber;
 					
+						var imgLink2 = 	"http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?nosettings=1&"
+							+"symb="+bigChartsTicker
+							+"&uf="+taIndicator
+							+"&type=4"
+							+"&size=1"
+							+"&style="+chartStyle
+							+"&"+chartType
+							+"&compidx=aaaaa:0"
+							+"&comp="
+							+"&ma=0"
+							+"&maval=9"
+							+"&lf="+taIndicator2
+							+"&lf2=0"
+							+"&lf3=0"
+							+"&height=335"
+							+"&width=579"
+							+"&mocktick=1"
+							+"&entitlementtoken=0c33378313484ba9b46b8e24ded87dd6"
+							+"&rand="+randomNumber;
+							
+						//&uf=2048&type=4&size=2&sid=8110469&style=320&freq=6&entitlementtoken=0c33378313484ba9b46b8e24ded87dd6&time=1&rand=721034714&compidx=SP500&ma=0&maval=9&lf=16777216&lf2=0&lf3=0&height=335&width=579&mocktick=1
+						
+					
 						// Images
 						if (chartSource == "images") {
 							$("#chart_container").append(
@@ -544,6 +568,27 @@
 							);
 						} 
 						
+						// Images v2
+						if (chartSource == "images2") {
+							$("#chart_container").append(
+							"<div class=\""+chartCss+"\">"
+								+"<a data-fancybox href=\""+imgLink2+"\"><img width=\"100%\" src=\""+imgLink2+"\" onerror=\"this.style.display='none'\"/></a>"
+								+"<div class=\"tickerOverlay\" >"+value+"</div>"
+								/*+"<div style=\"top: 0px\" class=\"tickerInfoOverlay\" id=\"IndxSymbol1\" >Bid: "+bidPrice+"</div>"
+								+"<div style=\"top: 18px\"class=\"tickerInfoOverlay\" id=\"IndxSymbol1\" >Ask: "+askPrice+"</div>"
+								+"<div style=\"top: 36px\" class=\"tickerInfoOverlay\" id=\"IndxSymbol1\" >Last: "+lastPrice+"</div>"*/
+								+"<div class=\"quicklinks\"\>"
+								+"<a data-toggle=\"tooltip\" title=\"Short data\" target=\"_blank\" class=\"btn btn-sm btn-danger\" href=\""+shortdataLink+"\"><i class=\"fa fa-level-down fa-fw\" aria-hidden=\"true\"></i></a>&nbsp;"
+								+"<a data-toggle=\"tooltip\" title=\"Insider info\" target=\"_blank\" class=\"btn btn-sm btn-default\" href=\""+insiderLink+"\"><i class=\"fa fa-user-secret fa-fw\" aria-hidden=\"true\"></i></a>&nbsp;"
+								+"<a data-toggle=\"tooltip\" title=\"Stockhouse\" target=\"_blank\" class=\"btn btn-sm btn-warning\" href=\""+stockhouseLink+"\"><i class=\"fa fa-bullhorn fa-fw\" aria-hidden=\"true\"></i></a>&nbsp;"
+								+"<a data-toggle=\"tooltip\" title=\"Stockwatch news\" target=\"_blank\" class=\"btn btn-sm btn-primary\" href=\""+stockwatchLink+"\"><i class=\"fa fa-newspaper-o fa-fw\" aria-hidden=\"true\"></i></a>&nbsp;"
+								+"<a data-toggle=\"tooltip\" title=\"Bot analysis\" target=\"_blank\" class=\"btn btn-sm btn-primary\" href=\""+botbullsLink+"\"><i class=\"fa fa-desktop fa-fw\" aria-hidden=\"true\"></i></a>&nbsp;"
+								+"<a data-toggle=\"tooltip\" title=\"TradingView\" target=\"_blank\" class=\"btn btn-sm btn-primary\" href=\""+tradingviewLink+"\"><i class=\"fa fa-line-chart fa-fw\" aria-hidden=\"true\"></i></a>&nbsp;"
+								+"</div>"
+							+"</div>"
+							);
+						}
+
 						if (chartSource == "tradingview") {
 							var script   = document.createElement("script");
 							script.text = 	"  new TradingView.widget( "+
@@ -687,6 +732,7 @@
 								<div class="form-group">
 									<select id="chartSource" class="form-control input-sm">
 										<option value="images">Images</option>
+										<option value="images2">Images v2</option>
 										<option value="tradingview">TradingView.com (buggy/delayed)</option>
 									</select>
 								</div>
@@ -766,6 +812,7 @@
 										<option value="622">Secret 2</option>
 										<option value="623">Secret 3</option>
 										<option value="624">Secret 4</option>
+										<option value="320">Images v2 - 1</option>
 									</select>
 								</div>
 							</div>
